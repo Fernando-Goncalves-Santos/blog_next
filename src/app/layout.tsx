@@ -13,10 +13,8 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="pt-br">
-      <header>Header</header>
+    <html lang="pt-br" className="light">
       <body>{children}</body>
-      <footer>Footer</footer>
     </html>
   );
 }
