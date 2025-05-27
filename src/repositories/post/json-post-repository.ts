@@ -14,7 +14,7 @@ const JSON_POSTS_FILE_PATH = resolve(
 const SIMULATE_WAIT = 0;
 
 export class JsonPostRepository implements PostRepository {
-  private async readFromDisk() {
+  private async readFromDisk(): Promise<PostModel[]> {
     const jsonContent = await readFile(JSON_POSTS_FILE_PATH, "utf-8");
     const parsedJson = JSON.parse(jsonContent);
     const { posts } = parsedJson;
@@ -26,15 +26,16 @@ export class JsonPostRepository implements PostRepository {
     await new Promise((resolve) => setTimeout(resolve, SIMULATE_WAIT));
   }
 
-  async findAll(): Promise<PostModel[]> {
+  async findAllPublic(): Promise<PostModel[]> {
     await this.simulateWait();
     const posts = await this.readFromDisk();
-    return posts;
+    const publicPosts = posts.filter(post => post.published)
+    return publicPosts;
   }
 
   async findById(id: string): Promise<PostModel> {
     await this.simulateWait()
-    const posts = await this.findAll();
+    const posts = await this.findAllPublic();
     const post = posts.find((post) => post.id === id);
     if (!post) throw new Error("Post não encontrado");
     return post;
