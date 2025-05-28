@@ -1,5 +1,5 @@
-import { formatDateTime, formatRelativeDate } from "@/utils/format-datetime";
 import PostHeading from "../PostHeading";
+import PostDate from "../PostDate";
 
 // Aqui eu poderia ter recebido diretamente o post como prop e usar title, excerpt, etc. no componente
 // Mas isso no next é considerado uma FALHA DE SEGURANÇA, ja que, em algum momento esse componente PostSummary
@@ -16,17 +16,11 @@ type PostSummaryProps = {
 export default function PostSummary({postHeading, postLink, title, createdAt, excerpt}: PostSummaryProps) {
   return (
     <div className="flex flex-col gap-4 sm:justify-center">
-      <time
-        dateTime={createdAt}
-        className="text-slate-600 block text-sm/tight dark:text-slate-50"
-        title={formatRelativeDate(createdAt)}
-      >
-        {formatDateTime(createdAt)}
-      </time>
+      <PostDate createdAt={createdAt}/>
       <PostHeading url={postLink} as={postHeading}>
         {title}
       </PostHeading>
-      <p>{excerpt}</p>
+      <p className="line-clamp-2">{excerpt}</p>
     </div>
   );
 }

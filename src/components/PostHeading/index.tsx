@@ -12,7 +12,7 @@ export default function PostHeading({children, url, as: Tag = "h2"}: PostHeading
     
   const ClassesMap = {
     h1: "text-2xl/tight font-extrabold sm:text-4xl",
-    h2: "text-2xl/tight font-bold",
+    h2: "text-2xl/tight font-bold line-clamp-2",
   };
   return (
     <Tag className={ClassesMap[Tag]}>

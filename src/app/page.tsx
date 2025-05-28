@@ -10,8 +10,8 @@ import { Suspense } from "react";
 export default async function HomePage() {
   return (
     <>
-      <PostFeatured />
-      <Suspense fallback={<SpinLoader />}>
+      <Suspense fallback={<SpinLoader containerClasses="min-h-20 mb-16"/>}>
+        <PostFeatured />
         <PostsList />
       </Suspense>
     </>

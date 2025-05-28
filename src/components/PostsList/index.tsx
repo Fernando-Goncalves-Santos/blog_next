@@ -5,11 +5,11 @@ import { findAllPublicPostsCached } from "@/lib/post/queries";
 export default async function PostsList() {
   const posts = await findAllPublicPostsCached()
   return (
-    <div className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
       {posts.slice(1).map((post) => {
         const postLink = `/post/${post.slug}`;
         return (
-          <div className="flex flex-col gap-4 group" key={post.id}>
+          <div className="flex flex-col gap-4 group h-full" key={post.id}>
             <PostCoverImage
               linkProps={{ href: postLink }}
               imageProps={{
@@ -19,6 +19,7 @@ export default async function PostsList() {
                 alt: post.title,
               }}
             />
+            
             <PostSummary
               postHeading="h2"
               postLink={postLink}
