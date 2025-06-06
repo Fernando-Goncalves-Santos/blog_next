@@ -1,14 +1,21 @@
 import { PostModel } from "@/models/post/post-model";
 import { PostRepository } from "./post-repository";
 import { drizzleDb } from "@/db/drizzle";
+import { logColor } from "@/utils/log-color";
+import { asyncDelay } from "@/utils/async-delay";
+import { SIMULATE_WAIT } from "@/lib/constants";
 import { postsTable } from "@/db/drizzle/schemas";
-import { eq, desc } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
+import { postRepository } from ".";
+
 
 export class DrizzlePostRepository implements PostRepository {
 
 
   async findAllPublic(): Promise<PostModel[]> {
-
+    logColor('FindAllPublic', Date.now())
+    await asyncDelay(SIMULATE_WAIT, true)
     const posts = await drizzleDb.query.posts.findMany({
         orderBy: (posts, {desc}) => desc(posts.createdAt),
         where: (posts, {eq}) => eq(posts.published, true)
@@ -25,6 +32,8 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findBySlugPublic(slug: string): Promise<PostModel>{
+    await asyncDelay(SIMULATE_WAIT, true)
+    logColor('FindSlugPublic', Date.now())
     const post = await drizzleDb.query.posts.findFirst({
       where: (posts, {eq, and}) => and(eq(posts.published, true), eq(posts.slug, slug))
     })
@@ -35,6 +44,8 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findAll(): Promise<PostModel[]> {
+    await asyncDelay(SIMULATE_WAIT, true)
+    logColor('FindAll', Date.now())
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, {desc}) => desc(posts.createdAt)
     })
@@ -42,6 +53,8 @@ export class DrizzlePostRepository implements PostRepository {
 
   }
   async findById(id: string): Promise<PostModel> {
+    await asyncDelay(SIMULATE_WAIT, true)
+    logColor('FindById', Date.now())
     const post = await drizzleDb.query.posts.findFirst({
       where: (posts, {eq}) => eq(posts.id, id)
     })
@@ -50,6 +63,7 @@ export class DrizzlePostRepository implements PostRepository {
 
     return post
   }
+
 }
 
 
