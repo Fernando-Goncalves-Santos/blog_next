@@ -8,8 +8,8 @@ import ToastifyContainer from "@/components/ToastifyContainer";
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Blog',
-    template: '%s | The Blog',
+    default: "The Blog",
+    template: "%s | The Blog",
   },
   description: "Blog usando Next.js",
 };
@@ -20,14 +20,14 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="pt-br" className="light">
+    <html lang="pt-br">
       <body>
         <Container>
           <Header />
           {children}
-          <Footer/>
+          <Footer />
         </Container>
-        <ToastifyContainer/>
+        <ToastifyContainer />
       </body>
     </html>
   );
