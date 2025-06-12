@@ -6,7 +6,7 @@ export const isUrlOrRelativePath = (val: string) => {
   // Verifica se começa com "http://" ou "https://"
   if (/^https?:\/\//i.test(trimmed)) {
     try {
-      const url = new URL(trimmed);
+      new URL(trimmed);
       return true;
     } catch {
       return false;

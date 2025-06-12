@@ -2,6 +2,7 @@
 // import { postsTable } from "./schemas";
 
 // (async () => {
-//   // const posts = await drizzleDb.select().from(postsTable);
-//   // console.log(posts)
+//   const posts = await drizzleDb.select().from(postsTable);
+//   posts.forEach((post, index) => console.log(index , " - ", post.title))
 // })();
+

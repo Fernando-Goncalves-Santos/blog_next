@@ -1,9 +1,12 @@
 "use server";
 
-import { IMAGE_SERVER_URL, IMAGE_UPLOAD_DIRECTORY, IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants";
-import { fi } from "date-fns/locale";
+import { verifyLoginSession } from "@/lib/login/manage-login";
 import { mkdir, writeFile } from "fs/promises";
 import { extname, resolve } from "path";
+
+const uploadMaxSize = Number(process.env.IMAGE_UPLOAD_MAX_SIZE) || 921600
+const uploadDir = process.env.IMAGE_UPLOAD_DIRECTORY || "uploads"
+const uploadServerURL = process.env.IMAGE_SERVER_URL || "http://localhost:3000/uploads"
 
 type UploadImageActionResult = {
   url: string;
@@ -13,9 +16,15 @@ type UploadImageActionResult = {
 export async function uploadImageAction(
   formData: FormData
 ): Promise<UploadImageActionResult> {
+
+  const isAuthenticated = await verifyLoginSession()
   const makeResult = ({ url = "", error = "" }) => {
     return { url, error };
   };
+
+  if(!isAuthenticated) {
+    return makeResult({error: 'Usuário deslogado. Faça login novamente'})
+  }
 
   // Verificações de segurança
   if (!(formData instanceof FormData)) {
@@ -28,7 +37,7 @@ export async function uploadImageAction(
     return makeResult({ error: "Arquivo inválido" });
   }
 
-  if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
+  if (file.size > uploadMaxSize) {
     return makeResult({ error: "Arquivo muito grande" });
   }
 
@@ -43,7 +52,7 @@ export async function uploadImageAction(
   const uploadFullPath = resolve(
     process.cwd(),
     "public",
-    IMAGE_UPLOAD_DIRECTORY
+    uploadDir
   );
 
   // Cria a pasta uploads caso não exista
@@ -57,7 +66,7 @@ export async function uploadImageAction(
   const fileFullPath = resolve(uploadFullPath, uniqueImageName)
   await writeFile(fileFullPath, buffer)
 
-  const url = `${IMAGE_SERVER_URL}/${uniqueImageName}`
+  const url = `${uploadServerURL}/${uniqueImageName}`
   
   return makeResult({ url });
 }

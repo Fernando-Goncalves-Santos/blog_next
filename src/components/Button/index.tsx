@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 
 type ButtonVariants = "default" | "ghost" | "danger";
 type ButtonSizes = "sm" | "md" | "lg";

@@ -2,10 +2,11 @@
 
 import { uploadImageAction } from "@/actions/upload/upload-image-action";
 import Button from "@/components/Button";
-import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants";
 import { ImageUpIcon } from "lucide-react";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "react-toastify";
+
+const uploadMaxSize = Number(process.env.IMAGE_UPLOAD_MAX_SIZE) || 921600
 
 type ImageUploaderProps = {
   disabled?: boolean
@@ -35,9 +36,9 @@ export function ImageUploader({disabled}: ImageUploaderProps) {
       return;
     }
 
-    if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
+    if (file.size > uploadMaxSize) {
       toast.dismiss();
-      const readableMaxSize = IMAGE_UPLOAD_MAX_SIZE / 1024;
+      const readableMaxSize = (uploadMaxSize / 1024).toFixed(2);
       toast.error(`Imagem muito grande. MAX.: ${readableMaxSize}KB`);
       fileInput.value = ""; //Limpando o campo do input
       setImgUrl("");
@@ -79,7 +80,7 @@ export function ImageUploader({disabled}: ImageUploaderProps) {
           <p>
             <b>URL:</b> {imgUrl}
           </p>
-          <img className="rounded-lg max-w-lg" src={imgUrl} />
+          <img className="rounded-lg max-w-lg" src={imgUrl} alt="preview da imagem" />
         </div>
       )}
       <input
