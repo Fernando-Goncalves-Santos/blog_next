@@ -7,8 +7,7 @@ import { SpinLoader } from "@/components/SpinLoader";
 
 import { Suspense } from "react";
 
-// Esse trecho "tenta" forçar a pagina a ser estatica
-export const dynamic = 'force-static'
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   return (
