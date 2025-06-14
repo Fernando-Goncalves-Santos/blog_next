@@ -6,7 +6,7 @@ export type PostModel = {
   content: string,
   coverImageUrl: string,
   published: boolean,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: string | Date,
+  updatedAt: string | Date,
   author: string,
 };

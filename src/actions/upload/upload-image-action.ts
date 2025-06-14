@@ -1,12 +1,10 @@
 "use server";
 
+import cloudinary from "@/lib/images/cloudinary-config";
 import { verifyLoginSession } from "@/lib/login/manage-login";
-import { mkdir, writeFile } from "fs/promises";
-import { extname, resolve } from "path";
+import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 
-const uploadMaxSize = Number(process.env.IMAGE_UPLOAD_MAX_SIZE) || 921600
-const uploadDir = process.env.IMAGE_UPLOAD_DIRECTORY || "uploads"
-const uploadServerURL = process.env.IMAGE_SERVER_URL || "http://localhost:3000/uploads"
+const uploadMaxSize = Number(process.env.IMAGE_UPLOAD_MAX_SIZE) || 921600;
 
 type UploadImageActionResult = {
   url: string;
@@ -16,14 +14,13 @@ type UploadImageActionResult = {
 export async function uploadImageAction(
   formData: FormData
 ): Promise<UploadImageActionResult> {
-
-  const isAuthenticated = await verifyLoginSession()
+  const isAuthenticated = await verifyLoginSession();
   const makeResult = ({ url = "", error = "" }) => {
     return { url, error };
   };
 
-  if(!isAuthenticated) {
-    return makeResult({error: 'Usuário deslogado. Faça login novamente'})
+  if (!isAuthenticated) {
+    return makeResult({ error: "Usuário deslogado. Faça login novamente" });
   }
 
   // Verificações de segurança
@@ -46,27 +43,38 @@ export async function uploadImageAction(
   }
 
   // Salvando a imagem
-  const imageExtension = extname(file.name);
-  const uniqueImageName = `${Date.now()}${imageExtension}`;
+  try {
+    const fileArrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(fileArrayBuffer);
 
-  const uploadFullPath = resolve(
-    process.cwd(),
-    "public",
-    uploadDir
-  );
+    const uploadResponse = await new Promise<UploadApiResponse>(
+      (resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "theblog",
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (error) {
+              return reject(error as UploadApiErrorResponse);
+            }
+            if (result) {
+              resolve(result);
+            } else {
+              reject(new Error("Upload failed without error response"));
+            }
+          }
+        );
 
-  // Cria a pasta uploads caso não exista
-  await mkdir(uploadFullPath, { recursive: true }); 
+        stream.end(buffer);
+      }
+    );
 
-// Criação do buffer para o upload através do Node
-  const fileArrayBuffer = await file.arrayBuffer()
-  const buffer = Buffer.from(fileArrayBuffer)
+    const url = uploadResponse.secure_url;
 
-//   Salvando o buffer no caminho criado com o nome unico
-  const fileFullPath = resolve(uploadFullPath, uniqueImageName)
-  await writeFile(fileFullPath, buffer)
-
-  const url = `${uploadServerURL}/${uniqueImageName}`
-  
-  return makeResult({ url });
+    return makeResult({ url });
+  } catch (error) {
+    console.error("Erro no upload do Cloudinary:", error);
+    return makeResult({ error: "Falha no upload da imagem" });
+  }
 }

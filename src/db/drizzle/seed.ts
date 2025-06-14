@@ -10,7 +10,7 @@ import { postsTable } from "./schemas";
     // **********ATENÇÃO**************
     await drizzleDb.delete(postsTable); // limpando a base de dados
     // **********ATENÇÃO**************
-    await drizzleDb.insert(postsTable).values(posts); //criando a tabela posts a partir da seed
+    // await drizzleDb.insert(postsTable).values(posts); //criando a tabela posts a partir da seed
     console.log(`\n\n${posts.length} posts foram salvos na base de dados\n\n`)
   } catch (e) {
     console.log("\n\nErro\n", e,"\n\n");

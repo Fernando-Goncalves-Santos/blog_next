@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     template: "%s | The Blog",
   },
   description: "Blog usando Next.js",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 type RootLayoutProps = {

@@ -8,7 +8,7 @@ import PostDate from "../PostDate";
 type PostSummaryProps = {
     postHeading: 'h1' | 'h2';
     postLink: string,
-    createdAt: string,
+    createdAt: string | Date,
     title: string,
     excerpt: string,
 }
