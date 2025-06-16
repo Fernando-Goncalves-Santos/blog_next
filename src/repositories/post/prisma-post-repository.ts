@@ -92,15 +92,4 @@ export class PrismaPostRepository implements PostRepository {
   }
 }
 
-// (async () => {
-//     try {
-//         const repository = new PrismaPostRepository()
-//         const posts = await repository.findAllPublic()
-//         posts.forEach(post => console.log(post.title))
-//     } catch (e) {
-//         console.log(e)
-//     } finally {
-//         await prisma.$disconnect()
-//     }
-// })()
 
