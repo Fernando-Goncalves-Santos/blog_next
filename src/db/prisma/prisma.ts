@@ -5,16 +5,17 @@ const globalForPrisma = global as unknown as {
   prisma: PrismaClient
 }
 
-const prisma = 
+const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    // @ts-expect-error - campo interno não tipado publicamente
     __internal: {
       engine: {
         disablePreparedStatements: true,
       },
     },
-    log: ['warn', 'error'],
   }).$extends(withAccelerate())
+
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
