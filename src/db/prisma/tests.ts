@@ -3,7 +3,7 @@ import prisma from "./prisma";
 
 async function main() {
   const posts = await postRepository.findAllPublic();
-  console.log(posts);
+  posts.forEach(post => console.log(post.title))
 }
 
 main()
