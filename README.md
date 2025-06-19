@@ -2,7 +2,6 @@
 
 Bem-vindo ao **TheBlog**, uma aplicação web desenvolvida com Next.js que permite criar, editar e gerenciar posts de forma simples, intuitiva e eficiente. Este projeto é focado em uma boa experiência tanto para desenvolvedores quanto para usuários finais.
 
---
 
 ## 📋 1. Descrição
 
@@ -16,7 +15,6 @@ O **TheBlog** é uma plataforma de blog full stack que permite:
 - 🔍 URLs amigáveis com slugs automáticos
 - 🔒 Sanitização de conteúdo para garantir segurança
 
---
 
 ## 🚀 2. Como Executar o Projeto
 
@@ -32,7 +30,6 @@ O **TheBlog** é uma plataforma de blog full stack que permite:
 ✔ Uma conta no Cloudinary para upload de imagens na web. Caso não possua, configure o projeto para upload local (seção 5)
 
 
---
 
 ### 🏗️ 3. **Instalação e Setup para rodar localmente**
 
@@ -56,7 +53,6 @@ npm install
 
 ```
 
---
 
 #### 4. Alteração do banco de dados de postgreSQL para SQLite com DrizzleDB:
 
@@ -76,7 +72,6 @@ import { PostRepository } from "./post-repository";
 export const postRepository: PostRepository = new DrizzlePostRepository()
 ```
 
---
 
 ### Crie as tabelas no banco de dados SQLite
 
@@ -88,7 +83,6 @@ npm run migrate
 npm run seed
 ```
 
---
 
 ### 5. Alteração do servidor Cloudinary para upload de imagens local
 
@@ -109,7 +103,6 @@ Contribuições são sempre bem-vindas! Se você quiser contribuir para o projet
 `git push origin feature/sua-nova-feature`
 - Abra um **Pull Request** neste repositório e descreva suas alterações.
 
---
 
 ## 👨‍💻 7. Autor
 
@@ -117,7 +110,6 @@ Contribuições são sempre bem-vindas! Se você quiser contribuir para o projet
 
 - LinkedIn: [Fernando](https://www.linkedin.com/in/fernando-goncalves-santos)
 
---
 
 💡 O TheBlog é um projeto focado na simplicidade e facilidade de uso. Atualmente, ele oferece funcionalidades essenciais para criação e gestão de conteúdos de blog.
 
