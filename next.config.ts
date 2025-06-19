@@ -22,6 +22,4 @@ const nextConfig: NextConfig = {
   }
 };
 
-//  https://res.cloudinary.com/dvt78xazb/image/upload/v1749852328/theblog/zwh7epljbewsgpfzfx9o.jpg
-
 export default nextConfig;
