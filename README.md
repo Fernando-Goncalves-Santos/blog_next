@@ -20,6 +20,8 @@ O **TheBlog** é uma plataforma de blog full stack que permite:
 
 ###  Você pode conferir a versão online 👉 **[Clicando aqui](https://theblog-sable.vercel.app)**, ou se prefererir pode rodar localmente o projeto executando o passo a passo a seguir:
 
+**Obs:** O projeto possui uma **área administrativa**, com autenticação utilizando bcryptJs e JWT que te permite adicionar novos posts, editá-los e excluí-los. Por motivos de segurança, login e senha não serão disponibilizados na versão online, mas você pode rodar o projeto localmente e definir as suas próprias credenciais de acesso no arquivo .env.local seguindo o passo a passo disponível em .env.local-example
+
 ### 🔧 **Passo a passo para rodar localmente:**
 
 > **Pré-requisitos:**  
@@ -88,7 +90,6 @@ npm run seed
 
 Cole o conteúdo do [gist](https://gist.github.com/Fernando-Goncalves-Santos/e0701f7936db19ac91828ab49c989b58#file-upload-image-action-ts) no arquivo /src/actions/upload/upload-image-action.ts substituindo todo o conteúdo.
 
---
 
 ## 🤝 6. Como Contribuir
 
