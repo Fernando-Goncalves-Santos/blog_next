@@ -53,13 +53,16 @@ npm install
 
 #### Altere o banco de dados de postgreSQL para SQLite com DrizzleDB:
 ```ts
-# - No arquivo index.ts em src/repositories/post altere de:
+// No arquivo index.ts em src/repositories/post altere de:
 import { PostRepository } from "./post-repository";
 import { PrismaPostRepository } from "./prisma-post-repository";
 
 export const postRepository: PostRepository = new PrismaPostRepository()
-export const postRepository: PostRepository = new PrismaPostRepository()  
-# - para:
+export const postRepository: PostRepository = new PrismaPostRepository()
+```
+
+```ts
+// para:
 import { DrizzlePostRepository } from "./drizzle-post-repository";
 import { PostRepository } from "./post-repository";
 
