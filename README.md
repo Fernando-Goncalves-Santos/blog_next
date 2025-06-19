@@ -4,7 +4,7 @@ Bem-vindo ao **TheBlog**, uma aplicação web desenvolvida com Next.js que permi
 
 ---
 
-## 📋 Descrição
+## 📋 1. Descrição
 
 O **TheBlog** é uma plataforma de blog full stack que permite:
 
@@ -18,18 +18,23 @@ O **TheBlog** é uma plataforma de blog full stack que permite:
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 🚀 2. Como Executar o Projeto
 
 ###  Você pode conferir a versão online 👉 **[Clicando aqui](https://theblog-sable.vercel.app)**, ou se prefererir pode rodar localmente o projeto executando o passo a passo a seguir:
 
 ### 🔧 **Passo a passo para rodar localmente:**
 
 > **Pré-requisitos:**  
-✔ Node.js instalado na sua máquina    
+✔ Node.js instalado na sua máquina
+
+> **Pré-requisitos OPCIONAIS:**
+✔ Um banco de dados PostgreSQL configurado **no prisma accelerate**. Caso não possua, configure o projeto para utilizar o banco de dados SQLite (seção 4)
+✔ Uma conta no Cloudinary para upload de imagens na web. Caso não possua, configure o projeto para upload local (seção 5)
+
 
 ---
 
-### 🏗️ **Instalação e Setup para rodar localmente**
+### 🏗️ 3. **Instalação e Setup para rodar localmente**
 
 ```bash
 # Clone o repositório
@@ -51,31 +56,45 @@ npm install
 
 ```
 
-#### Altere o banco de dados de postgreSQL para SQLite com DrizzleDB:
+---
+
+#### 4. Alteração do banco de dados de postgreSQL para SQLite com DrizzleDB:
+
+No arquivo index.ts em src/repositories/post altere de:
 ```ts
-// No arquivo index.ts em src/repositories/post altere de:
 import { PostRepository } from "./post-repository";
 import { PrismaPostRepository } from "./prisma-post-repository";
 
 export const postRepository: PostRepository = new PrismaPostRepository()
 ```
 
+para:
 ```ts
-// para:
 import { DrizzlePostRepository } from "./drizzle-post-repository";
 import { PostRepository } from "./post-repository";
 
 export const postRepository: PostRepository = new DrizzlePostRepository()
 ```
 
+---
+
 ### Crie as tabelas no banco de dados SQLite
+
+Crie as tabelas no banco
 ```bash
-# Crie as tabelas no banco
 npm run migrate
 
 # (Opcional) Popule o banco com posts de exemplo
 npm run seed
 ```
+
+---
+
+### 5. Alteração do servidor Cloudinary para upload de imagens local
+
+Cole o conteúdo do [gist](https://gist.github.com/Fernando-Goncalves-Santos/e0701f7936db19ac91828ab49c989b58#file-upload-image-action-ts) no arquivo /src/actions/upload/upload-image-action.ts substituindo todo o conteúdo.
+
+---
 
 ## 🤝 Como Contribuir
 
@@ -89,6 +108,8 @@ Contribuições são sempre bem-vindas! Se você quiser contribuir para o projet
 - Faça o push para sua branch:  
 `git push origin feature/sua-nova-feature`
 - Abra um **Pull Request** neste repositório e descreva suas alterações.
+
+---
 
 ## 👨‍💻 Autor
 
