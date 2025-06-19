@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TheBlog ✍️🚀
 
-## Getting Started
+Bem-vindo ao **TheBlog**, uma aplicação web desenvolvida com Next.js que permite criar, editar e gerenciar posts de forma simples, intuitiva e eficiente. Este projeto é focado em uma boa experiência tanto para desenvolvedores quanto para usuários finais.
 
-First, run the development server:
+
+## 📋 1. Descrição
+
+O **TheBlog** é uma plataforma de blog full stack que permite:
+
+- ✅ Criação, edição e exclusão de posts
+- 🖼️ Upload de imagens
+- 🔐 Autenticação com JWT
+- 📝 Escrita com suporte a Markdown
+- 🎨 Design responsivo e limpo utilizando Tailwind CSS
+- 🔍 URLs amigáveis com slugs automáticos
+- 🔒 Sanitização de conteúdo para garantir segurança
+
+
+## 🚀 2. Como Executar o Projeto
+
+###  Você pode conferir a versão online 👉 **[Clicando aqui](https://theblog-sable.vercel.app)**, ou se prefererir pode rodar localmente o projeto executando o passo a passo a seguir:
+
+**Obs:** O projeto possui uma **área administrativa**, com autenticação utilizando bcryptJs e JWT que te permite adicionar novos posts, editá-los e excluí-los. Por motivos de segurança, login e senha não serão disponibilizados na versão online, mas você pode rodar o projeto localmente e definir as suas próprias credenciais de acesso no arquivo .env.local seguindo o passo a passo disponível em .env.local-example
+
+### 🔧 **Passo a passo para rodar localmente:**
+
+> **Pré-requisitos:**  
+✔ Node.js instalado na sua máquina
+
+> **Pré-requisitos OPCIONAIS:**
+✔ Um banco de dados PostgreSQL configurado **no prisma accelerate**. Caso não possua, configure o projeto para utilizar o banco de dados SQLite (seção 4)
+✔ Uma conta no Cloudinary para upload de imagens na web. Caso não possua, configure o projeto para upload local (seção 5)
+
+
+
+### 🏗️ 3. **Instalação e Setup para rodar localmente**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone o repositório
+git clone https://github.com/---seu-usuario---/blog-app.git
+
+# Acesse a pasta do projeto
+cd blog-app
+
+# Instale as dependências
+npm install
+
+# Configure as variáveis de ambiente
+# Copie o .env.example e renomeie para .env.local
+
+# Edite o .env.local com suas configurações:
+# - URL do banco de dados (PostgreSQL ou SQLite)
+# - Chave secreta JWT
+# - Credenciais do Cloudinary
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 4. Alteração do banco de dados de postgreSQL para SQLite com DrizzleDB:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+No arquivo index.ts em src/repositories/post altere de:
+```ts
+import { PostRepository } from "./post-repository";
+import { PrismaPostRepository } from "./prisma-post-repository";
 
-## Learn More
+export const postRepository: PostRepository = new PrismaPostRepository()
+```
 
-To learn more about Next.js, take a look at the following resources:
+para:
+```ts
+import { DrizzlePostRepository } from "./drizzle-post-repository";
+import { PostRepository } from "./post-repository";
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+export const postRepository: PostRepository = new DrizzlePostRepository()
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### Crie as tabelas no banco de dados SQLite
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Crie as tabelas no banco
+```bash
+npm run migrate
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# (Opcional) Popule o banco com posts de exemplo
+npm run seed
+```
+
+
+### 5. Alteração do servidor Cloudinary para upload de imagens local
+
+Cole o conteúdo do [gist](https://gist.github.com/Fernando-Goncalves-Santos/e0701f7936db19ac91828ab49c989b58#file-upload-image-action-ts) no arquivo /src/actions/upload/upload-image-action.ts substituindo todo o conteúdo.
+
+
+## 🤝 6. Como Contribuir
+
+Contribuições são sempre bem-vindas! Se você quiser contribuir para o projeto **TheBlog**, siga os passos abaixo:
+
+- Faça um **fork** deste repositório.
+- Crie uma nova branch para sua feature:  
+`git checkout -b feature/sua-nova-feature`
+- Faça o commit das suas alterações:  
+`git commit -m 'Adiciona nova feature'`
+- Faça o push para sua branch:  
+`git push origin feature/sua-nova-feature`
+- Abra um **Pull Request** neste repositório e descreva suas alterações.
+
+
+## 👨‍💻 7. Autor
+
+**Fernando Gonçalves Santos**
+
+- LinkedIn: [Fernando](https://www.linkedin.com/in/fernando-goncalves-santos)
+
+
+💡 O TheBlog é um projeto focado na simplicidade e facilidade de uso. Atualmente, ele oferece funcionalidades essenciais para criação e gestão de conteúdos de blog.
+
+Sinta-se à vontade para contribuir com:
+
+- Novas funcionalidades
+- Melhorias de performance
+- Sugestões de design
+- Correções de bugs
+- Documentação
+
+Caso tenha alguma dúvida, problema ou sugestão, não hesite em abrir uma **issue** neste repositório. 📝🚀
+
+---
+
+🎯 **Divirta-se desenvolvendo e utilizando o TheBlog!**
+
+
